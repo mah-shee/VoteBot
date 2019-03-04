@@ -3,30 +3,30 @@ import discord
 
 client = discord.Client()
 
-async def send2developer(text):
-    """ 開発者にDMを送る """
-    # DEVELOPER_ID に自分のユーザIDを入れてください
-    developer = client.get_user(DEVELOPER_ID)
-    dm = await developer.create_dm()
-    await dm.send(text)
-
-
-@client.event
-async def on_ready():
-    """ 起動時のイベントハンドラ """
-    text = f'Logged on as {client.user}!'
-    await send2developer(text)
-
-
-@client.event
-async def on_message(message):
-    """ メッセージ受信時のイベントハンドラ """
-    try:
-        if message.author != client.user:  # bot自身の発言には反応しない
-            text = 'Message from {0.author}: {0.content}'.format(message)
-            await send2developer(text)
-    except Exception:  # エラー発生時にはトレースバックがDMで送られてくる
-        await send2developer(traceback.format_exc())
+# async def send2developer(text):
+#     """ 開発者にDMを送る """
+#     # DEVELOPER_ID に自分のユーザIDを入れてください
+#     developer = client.get_user(DEVELOPER_ID)
+#     dm = await developer.create_dm()
+#     await dm.send(text)
+# 
+# 
+# @client.event
+# async def on_ready():
+#     """ 起動時のイベントハンドラ """
+#     text = f'Logged on as {client.user}!'
+#     await send2developer(text)
+# 
+# 
+# @client.event
+# async def on_message(message):
+#     """ メッセージ受信時のイベントハンドラ """
+#     try:
+#         if message.author != client.user:  # bot自身の発言には反応しない
+#             text = 'Message from {0.author}: {0.content}'.format(message)
+#             await send2developer(text)
+#     except Exception:  # エラー発生時にはトレースバックがDMで送られてくる
+#         await send2developer(traceback.format_exc())
 
 
 @client.event
