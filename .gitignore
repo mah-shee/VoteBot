@@ -1,1 +1,2 @@
 .env.local
+./voteBot/__pycache__/
