@@ -3,36 +3,11 @@ import discord
 
 client = discord.Client()
 
-# async def send2developer(text):
-#     """ 開発者にDMを送る """
-#     # DEVELOPER_ID に自分のユーザIDを入れてください
-#     developer = client.get_user(DEVELOPER_ID)
-#     dm = await developer.create_dm()
-#     await dm.send(text)
-# 
-# 
-# @client.event
-# async def on_ready():
-#     """ 起動時のイベントハンドラ """
-#     text = f'Logged on as {client.user}!'
-#     await send2developer(text)
-# 
-# 
-# @client.event
-# async def on_message(message):
-#     """ メッセージ受信時のイベントハンドラ """
-#     try:
-#         if message.author != client.user:  # bot自身の発言には反応しない
-#             text = 'Message from {0.author}: {0.content}'.format(message)
-#             await send2developer(text)
-#     except Exception:  # エラー発生時にはトレースバックがDMで送られてくる
-#         await send2developer(traceback.format_exc())
 
-
-@client.event
-async def on_reaction_add(reaction, user):
-    author = reaction.message.author
-    await reaction.message.channel.send(f"{user} さんがめっちゃリアクションをしました")
+#@client.event
+#async def on_reaction_add(reaction, user):
+#    author = reaction.message.author
+#    await reaction.message.channel.send(f'{user}が{reaction.message}に{reaction.emoji}を付けました')
 
 
 @client.event
@@ -65,3 +40,28 @@ async def on_message(message):
         if client.user != message.author:
             m = "お役に立てて光栄です！" + message.author.name + "さん！"
             await message.channel.send(m)
+
+    elif message.content.startswith("スイッチ"):
+        msg = await message.channel.send("リアクションスイッチ")
+        await msg.add_reaction('👈')
+        await msg.add_reaction('👉')
+        client.loop.create_task(check_reaction(msg))
+
+@client.event
+async def check_reaction(message):
+    """
+    指定のメッセージにリアクションがついたらメッセージを送る
+    """
+    while True:
+        await client.wait_for('reaction_add')
+        if message.reaction.emoji == '👈':
+            await message.channel.send("戻る")
+
+        elif message.reaction.emoji == '👉':
+            await message.channnelsend("進む")
+
+        else:
+            pass
+
+        await client.remove_reaction(message, \
+        message.reaction.emoji, target_reaction.user)
