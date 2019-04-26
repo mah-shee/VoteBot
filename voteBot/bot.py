@@ -1,11 +1,12 @@
 import traceback
+
 import discord
 
 client = discord.Client()
 
 
-#@client.event
-#async def on_reaction_add(reaction, user):
+# @client.event
+# async def on_reaction_add(reaction, user):
 #    author = reaction.message.author
 #    await reaction.message.channel.send(f'{user}が{reaction.message}に{reaction.emoji}を付けました')
 
@@ -40,5 +41,5 @@ async def on_message(message):
 
 @client.event
 async def on_reaction_add(reaction, user):
-    if reaction.emoji == '🙌' and reaction.count == 2:
-        await reaction.message.add_reaction('😻')
+    if reaction.emoji == "🙌" and reaction.count == 2:
+        await reaction.message.add_reaction("😻")
